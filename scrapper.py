@@ -10,7 +10,8 @@ class Scrapper:
         result = soup.find_all("p", class_="course__irs-tab-subtitle")
         for res in result:
             if "stała stopa bazowa" in res.contents[0]:
-                return res.contents[0]
+                data = res.contents[0].split()
+                return "Stała stopa bazowa:" + data[-1]
     
     def get_wibors_from_pkobp(self):
         url = "https://www.pkobp.pl/waluty/#/interbank"
@@ -28,7 +29,7 @@ class Scrapper:
                 wibor6m="Wibor 6m:"
                 wibor3m+=content[content.find(start)+len(start):content.rfind(end)]
                 wibor6m+=content[content.find(start2)+len(start2):content.rfind(end2)]
-                concat=wibor3m+ "\n" + wibor6m
+                concat=wibor3m+ "  " + wibor6m
                 return concat
         return "Cannot fetch wibor data from pkobp"
 
@@ -49,7 +50,7 @@ class Scrapper:
         html_content = requests.get(url).text
         soup = BeautifulSoup(html_content, "html.parser")
         result = soup.find_all("td")
-        content="Wibor 3m(Aktualizowany raz na 3m): "
+        content="Wibor 3M "
         for r in result:
             if "WIBOR 3M dla PLN" in r.get_text():
                 content += r.next_sibling.next_sibling.get_text().strip()
