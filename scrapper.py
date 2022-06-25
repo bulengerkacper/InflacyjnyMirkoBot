@@ -35,6 +35,17 @@ class Scrapper:
                 return concat
         return "Cannot fetch wibor data from pkobp"
 
+    def get_interests_rate_from_nbp(self):
+        url="https://www.nbp.pl/"
+        html_content = requests.get(url).text
+        soup = BeautifulSoup(html_content, "html.parser")
+        result = soup.find_all("td")
+        content="Stopa referencyjna nbp: "
+        for r in result:
+            if "Referencyjna" in r.get_text():
+                content += r.next_sibling.next_sibling.get_text().strip()
+                return content
+
     def collect_all_data(self):
-        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp()
+        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + "\nNBP\n" + self.get_interests_rate_from_nbp()
 
