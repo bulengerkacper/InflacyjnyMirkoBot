@@ -42,6 +42,7 @@ class Scrapper:
             if "Referencyjna" in r.get_text():
                 content += r.next_sibling.next_sibling.get_text().strip()
                 return content
+        return "Cannot fetch data from nbp"
     
     def get_wibor_from_mbank(self):
         url="https://www.mbank.pl/pomoc/oprocentowanie/firmy/"
@@ -53,7 +54,8 @@ class Scrapper:
             if "WIBOR 3M dla PLN" in r.get_text():
                 content += r.next_sibling.next_sibling.get_text().strip()
                 return content
+        return "Cannot fetch data from mbank"
 
     def collect_all_data(self):
-        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + "MBANK:\n" + self.get_wibors_from_pkobp() +  "\nNBP\n" + self.get_interests_rate_from_nbp()
+        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + "\nMBANK:\n" + self.get_wibor_from_mbank() +  "\nNBP\n" + self.get_interests_rate_from_nbp()
 
