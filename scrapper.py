@@ -3,9 +3,6 @@ import requests
 
 class Scrapper:
 
-    def __init__(self):
-        _a='a'
-
     def get_base_rate_from_pkobp(self): #works ok
         url = "https://www.pkobp.pl/waluty/#/base_rate"
         html_content = requests.get(url).text
@@ -45,7 +42,18 @@ class Scrapper:
             if "Referencyjna" in r.get_text():
                 content += r.next_sibling.next_sibling.get_text().strip()
                 return content
+    
+    def get_wibor_from_mbank(self):
+        url="https://www.mbank.pl/pomoc/oprocentowanie/firmy/"
+        html_content = requests.get(url).text
+        soup = BeautifulSoup(html_content, "html.parser")
+        result = soup.find_all("td")
+        content="Wibor 3m(Aktualizowany raz na 3m): "
+        for r in result:
+            if "WIBOR 3M dla PLN" in r.get_text():
+                content += r.next_sibling.next_sibling.get_text().strip()
+                return content
 
     def collect_all_data(self):
-        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + "\nNBP\n" + self.get_interests_rate_from_nbp()
+        return "PKOBP\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + "MBANK:\n" + self.get_wibors_from_pkobp() +  "\nNBP\n" + self.get_interests_rate_from_nbp()
 
