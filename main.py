@@ -8,8 +8,10 @@ def main():
     write_an_entry_about_zero(scrapper)
 
 def write_an_entry_about_zero(scrapper):
-    content = "Jestem botem, który raz dziennie pobiera aktualne wskaźniki odnośnie stóp procentowych i wskaźników referencyjnych z stron nbp i banków.\n"
-    content += scrapper.collect_all_data() + "\n#polityka #nbp #kredythipoteczny #glapa #stuuupki"
+    content = "Jestem botem, który raz dziennie pobiera aktualne wskaźniki kredytowe (dostępne na stronach wybory) oraz stope referencyjną z strony NBP.\n"
+    song = "\nhttps://www.youtube.com/watch?v=GzzDZIdywPg"
+    tags = "\n#polityka #nbp #kredythipoteczny #glapa #stuuupki"
+    content += scrapper.combine_all_data() + song + tags
     print(content)
     #api.entry_add(content + tags)
 

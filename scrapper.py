@@ -69,7 +69,7 @@ class Scrapper:
                 s2 = "WIBOR 6M "
                 return ( content[content.index(s2) + len(s2):].strip())
 
-    def collect_all_data(self):
+    def combine_all_data(self):
         return "PKOBP:(Aktualizacja w dni robocze)\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + \
          "\nMBANK(Aktualizacja raz na 3 miesiace):\n" + self.get_wibor_from_mbank()  + \
             "\nING(Aktualizacja raz na 6 miesiecy) WIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
