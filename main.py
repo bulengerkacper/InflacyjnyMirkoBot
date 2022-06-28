@@ -1,11 +1,9 @@
 from authenticate import *
 from scrapper import *
+import schedule
+import time
 import wykop
 
-def main():
-    #api = access_wykop()
-    scrapper = Scrapper()
-    write_an_entry_about_zero(scrapper)
 
 def write_an_entry_about_zero(scrapper):
     content = "Jestem botem, który raz dziennie pobiera aktualne wskaźniki kredytowe (dostępne na stronach wybory) oraz stope referencyjną z strony NBP.\n"
@@ -15,11 +13,22 @@ def write_an_entry_about_zero(scrapper):
     print(content)
     #api.entry_add(content + tags)
 
-if __name__ == "__main__":
-    main()
-
 def access_wykop():
     api = wykop.WykopAPI(authenticate.key_app, authenticate.secret)
     api.authenticate(authenticate.key_connection)
     api.conversations_list()
     return api
+
+def task():
+    scrapper = Scrapper()
+    write_an_entry_about_zero(scrapper)
+
+def scheduler():
+    schedule.every().day.at("12:00").do(task)
+
+def main():
+    task()
+    #scheduler()
+    
+if __name__ == "__main__":
+    main()
