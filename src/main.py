@@ -4,7 +4,6 @@ import schedule
 import time
 import wykop
 
-
 def write_an_entry_about_zero(scrapper):
     content = "Jestem botem, który raz dziennie pobiera aktualne wskaźniki kredytowe (dostępne na stronach wybory) oraz stope referencyjną z strony NBP.\n"
     song = "\nhttps://www.youtube.com/watch?v=GzzDZIdywPg"
@@ -16,7 +15,7 @@ def write_an_entry_about_zero(scrapper):
 def access_wykop():
     api = wykop.WykopAPI(authenticate.key_app, authenticate.secret)
     api.authenticate(authenticate.key_connection)
-    api.conversations_list()
+    #api.conversations_list() to be removed probably
     return api
 
 def task():
