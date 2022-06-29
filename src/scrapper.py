@@ -82,5 +82,5 @@ class Scrapper:
         return "PKOBP:(Aktualizacja w dni robocze)\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + \
             "\nPEAKO (Aktualizacja w dni robocze)\n" + self.get_wibor_from_peako() +  \
          "\nMBANK(Aktualizacja raz na 3 miesiace):\n" + self.get_wibor_from_mbank()  + \
-            "\nING(Aktualizacja raz na 6 miesiecy) WIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
+            "\nING(Aktualizacja raz na 6 miesiecy)\nWIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
 
