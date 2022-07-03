@@ -67,7 +67,7 @@ class Scrapper:
             if "Oprocentowanie" in r.get_text():
                 content=r.next_sibling.next_sibling.get_text()
                 s2 = "WIBOR 6M "
-                return ( content[content.index(s2) + len(s2):].strip())
+                return (content[content.index(s2) + len(s2):].strip())
 
     def get_wibor_from_peako(self):
         url = "https://www.pekaobh.pl/strefa-klienta-main/wibor.html"
@@ -80,7 +80,7 @@ class Scrapper:
             
     def combine_all_data(self):
         return "PKOBP:(Aktualizacja w dni robocze)\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + \
-            "\nPEAKO (Aktualizacja w dni robocze)\n" + self.get_wibor_from_peako() +  \
+            "\nPEAKO (Aktualizacja w dni robocze):\n" + self.get_wibor_from_peako() +  \
          "\nMBANK(Aktualizacja raz na 3 miesiace):\n" + self.get_wibor_from_mbank()  + \
-            "\nING(Aktualizacja raz na 6 miesiecy)\nWIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
+            "\nING(Aktualizacja raz na 6 miesiecy):\nWIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
 
