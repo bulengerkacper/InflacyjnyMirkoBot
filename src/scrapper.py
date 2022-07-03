@@ -12,6 +12,7 @@ class Scrapper:
             if "stała stopa bazowa" in res.contents[0]:
                 data = res.contents[0].split()
                 return "Stała stopa bazowa:" + data[-1]
+        return "Cannot fetch base rate from pkobp."
     
     def get_wibors_from_pkobp(self):
         url = "https://www.pkobp.pl/waluty/#/interbank"
@@ -61,13 +62,13 @@ class Scrapper:
         url="https://www.ing.pl/indywidualni/kredyty-i-pozyczki/kredyt-hipoteczny/informacje-ogolne-o-kredycie-hipotecznym"
         html_content = requests.get(url).text
         soup = BeautifulSoup(html_content, "html.parser")
-        #result = soup.find_all("table", class_="table_type2")
         result2 = soup.find_all("td")
         for r in result2:
             if "Oprocentowanie" in r.get_text():
                 content=r.next_sibling.next_sibling.get_text()
                 s2 = "WIBOR 6M "
                 return (content[content.index(s2) + len(s2):].strip())
+        return "Cannot fetch data from ing"
 
     def get_wibor_from_peako(self):
         url = "https://www.pekaobh.pl/strefa-klienta-main/wibor.html"
@@ -82,5 +83,5 @@ class Scrapper:
         return "PKOBP:(Aktualizacja w dni robocze)\n" + self.get_wibors_from_pkobp() +"\n" + self.get_base_rate_from_pkobp() + \
             "\nPEAKO (Aktualizacja w dni robocze):\n" + self.get_wibor_from_peako() +  \
          "\nMBANK(Aktualizacja raz na 3 miesiace):\n" + self.get_wibor_from_mbank()  + \
-            "\nING(Aktualizacja raz na 6 miesiecy):\nWIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:  " + self.get_interests_rate_from_nbp()
+            "\nING(Aktualizacja raz na 6 miesiecy):\nWIBOR6M :" + self.get_wibor_from_ing() +  "\nNBP:" + self.get_interests_rate_from_nbp()
 
